@@ -7,7 +7,7 @@ executors:
   my-executor:
     docker:
       - image: buildpack-deps:jessie
-    working_directory: ~/echo-test
+    working_directory: /tmp/test
 
 jobs:
   flow:
@@ -25,7 +25,7 @@ jobs:
       name: node/default
     steps:
       - attach_workspace:
-          at: ~/echo-test
+          at: /tmp/test
       - run: |
           if [[ `cat echo-output` == "Hello, world!" ]]; then
             echo "It worked!";
