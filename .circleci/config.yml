@@ -21,6 +21,7 @@ jobs:
   downstream:
     executor:
       name: node/default
+    working_directory: ~/test
     steps:
       - attach_workspace:
           at: ~/test
