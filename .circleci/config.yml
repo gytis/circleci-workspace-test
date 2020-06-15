@@ -16,9 +16,9 @@ jobs:
     steps:
       - run: echo "Hello, world!" > echo-output
       - persist_to_workspace:
-          root: .
+          root: /tmp/test
           paths:
-            - .
+            - /tmp/test
 
   downstream:
     executor:
