@@ -16,7 +16,7 @@ jobs:
     steps:
       - run: echo "Hello, world!" > echo-output
       - persist_to_workspace:
-          root: /tmp/test
+          root: /tmp/workspace
           paths:
             - .
 
@@ -25,9 +25,9 @@ jobs:
       name: node/default
     steps:
       - attach_workspace:
-          at: /tmp/test
+          at: /tmp/workspace
       - run: |
-          if [[ `cat /tmp/test/echo-output` == "Hello, world!" ]]; then
+          if [[ `cat /tmp/workspace/echo-output` == "Hello, world!" ]]; then
             echo "It worked!";
           else
             echo "Nope!"; exit 1
