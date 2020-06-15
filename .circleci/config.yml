@@ -35,8 +35,6 @@ jobs:
           fi
 
 workflows:
-  version: 2
-
   btd:
     jobs:
       - flow
