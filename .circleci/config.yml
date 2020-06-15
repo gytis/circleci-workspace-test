@@ -1,36 +1,33 @@
 version: 2.1
 
+orbs:
+  node: circleci/node@1.1.6
+
 executors:
   my-executor:
     docker:
       - image: buildpack-deps:jessie
-    working_directory: /tmp
+    working_directory: ~/echo-test
 
 jobs:
   flow:
-    executor: my-executor
+    executor:
+      name: node/default
     steps:
-      - run: mkdir -p workspace
-      - run: echo "Hello, world!" > workspace/echo-output
-      
-      # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
+      - run: echo "Hello, world!" > echo-output
       - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
-          # taken to be the root directory of the workspace.
-          root: workspace
-          # Must be relative path from root
+          root: .
           paths:
-            - echo-output
+            - .
 
   downstream:
-    executor: my-executor
+    executor:
+      name: node/default
     steps:
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
-
+          at: ~/echo-test
       - run: |
-          if [[ `cat /tmp/workspace/echo-output` == "Hello, world!" ]]; then
+          if [[ `cat echo-output` == "Hello, world!" ]]; then
             echo "It worked!";
           else
             echo "Nope!"; exit 1
