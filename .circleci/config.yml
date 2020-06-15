@@ -7,7 +7,7 @@ jobs:
   flow:
     executor:
       name: node/default
-    working_directory: /tmp/test
+    working_directory: ~/test
     steps:
       - run: echo "Hello, world!" > echo-output
       - persist_to_workspace:
@@ -20,9 +20,9 @@ jobs:
       name: node/default
     steps:
       - attach_workspace:
-          at: /tmp/test
+          at: ~/test
       - run: |
-          if [[ `cat /tmp/test/echo-output` == "Hello, world!" ]]; then
+          if [[ `cat ~/test/echo-output` == "Hello, world!" ]]; then
             echo "It worked!";
           else
             echo "Nope!"; exit 1
